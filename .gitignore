@@ -1,0 +1,6 @@
+output/
+buildroot/output/
+*.img
+*.ext4
+*.tar
+*.gz
