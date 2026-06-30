@@ -22,8 +22,11 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          submodules: recursive
+
+      - name: Init Buildroot submodule
+        run: |
+          git submodule sync --recursive
+          git submodule update --init --recursive
 
       - name: Install dependencies
         run: |
@@ -68,8 +71,11 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          submodules: recursive
+
+      - name: Init Buildroot submodule
+        run: |
+          git submodule sync --recursive
+          git submodule update --init --recursive
 
       - name: Install dependencies
         run: |
