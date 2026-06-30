@@ -8,13 +8,34 @@
 #include "../include/uart.h"
 #include <unistd.h>
 
+static speed_t uart_get_speed(int baudrate)
+{
+    switch (baudrate)
+    {
+        case 9600:
+            return B9600;
 
+        case 19200:
+            return B19200;
+
+        case 38400:
+            return B38400;
+
+        case 57600:
+            return B57600;
+
+        case 115200:
+            return B115200;
+
+        default:
+            return B115200;
+    }
+}
 
 int uart_configure(int fd, int baudrate)
 {
     struct termios tty;
-
-    (void)baudrate;
+    speed_t speed = uart_get_speed(baudrate);
 
     if (tcgetattr(fd, &tty) != 0)
     {
@@ -22,8 +43,8 @@ int uart_configure(int fd, int baudrate)
         return -1;
     }
 
-    cfsetispeed(&tty, B115200);
-    cfsetospeed(&tty, B115200);
+    cfsetispeed(&tty, speed);
+    cfsetospeed(&tty, speed);
 
     tty.c_cflag &= ~PARENB;
     tty.c_cflag &= ~CSTOPB;
@@ -42,7 +63,7 @@ int uart_configure(int fd, int baudrate)
         return -1;
     }
 
-    printf("UART configured: 115200 8N1\n");
+    printf("UART configured: %d 8N1\n", baudrate);
 
     return 0;
 }
