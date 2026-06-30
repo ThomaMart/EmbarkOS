@@ -1,0 +1,4 @@
+config BR2_PACKAGE_EMBARK_INFO
+    bool "embark-info"
+    help
+      Display EmbarkOS system information.
