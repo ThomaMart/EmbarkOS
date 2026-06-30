@@ -1,0 +1,50 @@
+name: Test EmbarkOS (QEMU)
+
+on:
+  workflow_dispatch:
+
+  workflow_run:
+    workflows: ["Build EmbarkOS"]
+    types:
+      - completed
+
+jobs:
+
+  test-qemu:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+
+          sudo apt-get install -y \
+            build-essential \
+            bc \
+            bison \
+            flex \
+            cpio \
+            rsync \
+            unzip \
+            wget \
+            expect \
+            qemu-system-arm \
+            qemu-system-aarch64
+
+      - name: Build QEMU image
+        run: |
+          chmod +x scripts/build-qemu.sh
+          ./scripts/build-qemu.sh
+
+      - name: Smoke test
+        timeout-minutes: 5
+        run: |
+          chmod +x scripts/test-qemu.sh
+          ./scripts/test-qemu.sh

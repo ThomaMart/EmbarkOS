@@ -10,12 +10,6 @@ echo "========================================="
 
 make -C "$ROOT/buildroot" \
     BR2_EXTERNAL="$ROOT/external/embarkos" \
-    O="$ROOT/output/qemu" \
-    BR2_DEFCONFIG="$ROOT/configs/embarkos_qemu_defconfig" \
-    defconfig
-
-make -C "$ROOT/buildroot" \
-    BR2_EXTERNAL="$ROOT/external/embarkos" \
     O="$ROOT/output/qemu"
 
 echo

@@ -4,7 +4,12 @@ TARGET = embark-monitor
 
 SRC = \
 	src/main.c \
-	src/monitor.c
+	src/monitor.c \
+	src/system.c \
+	src/cpu.c \
+	src/memory.c \
+	src/disk.c \
+	src/uptime.c
 
 OBJ = $(SRC:.c=.o)
 
