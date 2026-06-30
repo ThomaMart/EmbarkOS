@@ -1,3 +1,4 @@
 source "$BR2_EXTERNAL_EMBARKOS_PATH/package/embark-info/Config.in"
 source "$BR2_EXTERNAL_EMBARKOS_PATH/package/embark-uart/Config.in"
 source "$BR2_EXTERNAL_EMBARKOS_PATH/package/embark-gpio/Config.in"
+source "$BR2_EXTERNAL_EMBARKOS_PATH/package/embark-monitor/Config.in"

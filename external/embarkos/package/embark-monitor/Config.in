@@ -1,0 +1,4 @@
+config BR2_PACKAGE_EMBARK_MONITOR
+	bool "embark-monitor"
+	help
+	  EmbarkOS package monitor.

@@ -1,0 +1,4 @@
+config BR2_PACKAGE_EMBARK_TEMPLATE
+	bool "embark-template"
+	help
+	  EmbarkOS package template.
