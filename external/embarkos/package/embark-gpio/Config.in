@@ -1,4 +1,5 @@
 config BR2_PACKAGE_EMBARK_GPIO
-    bool "embark-gpio"
-    help
-      GPIO utility for EmbarkOS.
+	bool "embark-gpio"
+	depends on BR2_PACKAGE_LIBGPIOD
+	help
+	  EmbarkOS GPIO utility based on libgpiod.

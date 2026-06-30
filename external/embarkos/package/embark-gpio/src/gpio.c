@@ -1,48 +1,43 @@
 #include <stdio.h>
-#include <string.h>
-#include <dirent.h>
-
 #include <gpiod.h>
 
-#include "gpio.h"
+#include "../include/gpio.h"
 
 int gpio_list(void)
 {
-    struct dirent *entry;
-    DIR *dir;
-
-    dir = opendir("/dev");
-
-    if (!dir)
-    {
-        perror("opendir");
-        return 1;
-    }
+    char path[32];
 
     printf("Available GPIO chips\n");
     printf("--------------------\n");
 
-    while ((entry = readdir(dir)) != NULL)
+    for (int i = 0; i < 8; i++)
     {
-        if (!strncmp(entry->d_name, "gpiochip", 8))
-            printf("%s\n", entry->d_name);
-    }
+        struct gpiod_chip *chip;
 
-    closedir(dir);
+        snprintf(path, sizeof(path), "/dev/gpiochip%d", i);
+
+        chip = gpiod_chip_open(path);
+
+        if (chip)
+        {
+            printf("%s\n", gpiod_chip_name(chip));
+            gpiod_chip_close(chip);
+        }
+    }
 
     return 0;
 }
 
-int gpio_info(const char *chip)
+int gpio_info(const char *chip_name)
 {
-    struct gpiod_chip *gpio;
     char path[64];
+    struct gpiod_chip *chip;
 
-    snprintf(path, sizeof(path), "/dev/%s", chip);
+    snprintf(path, sizeof(path), "/dev/%s", chip_name);
 
-    gpio = gpiod_chip_open(path);
+    chip = gpiod_chip_open(path);
 
-    if (!gpio)
+    if (!chip)
     {
         perror("gpiod_chip_open");
         return 1;
@@ -50,11 +45,32 @@ int gpio_info(const char *chip)
 
     printf("GPIO Chip Information\n");
     printf("---------------------\n");
-    printf("Name  : %s\n", gpiod_chip_name(gpio));
-    printf("Label : %s\n", gpiod_chip_label(gpio));
-    printf("Lines : %u\n", gpiod_chip_num_lines(gpio));
+    printf("Name  : %s\n", gpiod_chip_name(chip));
+    printf("Label : %s\n", gpiod_chip_label(chip));
+    printf("Lines : %u\n", gpiod_chip_num_lines(chip));
 
-    gpiod_chip_close(gpio);
+    gpiod_chip_close(chip);
+
+    return 0;
+}
+
+int gpio_get(const char *chip_name, unsigned int line)
+{
+    printf("gpio_get(%s, %u) not implemented yet.\n",
+           chip_name,
+           line);
+
+    return 0;
+}
+
+int gpio_set(const char *chip_name,
+             unsigned int line,
+             int value)
+{
+    printf("gpio_set(%s, %u, %d) not implemented yet.\n",
+           chip_name,
+           line,
+           value);
 
     return 0;
 }

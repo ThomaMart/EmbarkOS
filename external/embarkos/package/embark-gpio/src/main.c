@@ -1,7 +1,8 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
-#include "gpio.h"
+#include "../include/gpio.h"
 
 static void usage(void)
 {
@@ -10,6 +11,8 @@ static void usage(void)
     printf("Usage:\n");
     printf("    embark-gpio list\n");
     printf("    embark-gpio info <gpiochip>\n");
+    printf("    embark-gpio get <gpiochip> <line>\n");
+    printf("    embark-gpio set <gpiochip> <line> <0|1>\n");
 }
 
 int main(int argc, char *argv[])
@@ -34,6 +37,30 @@ int main(int argc, char *argv[])
         }
 
         return gpio_info(argv[2]);
+    }
+
+    if (!strcmp(argv[1], "get"))
+    {
+        if (argc != 4)
+        {
+            usage();
+            return 1;
+        }
+
+        return gpio_get(argv[2], (unsigned int)atoi(argv[3]));
+    }
+
+    if (!strcmp(argv[1], "set"))
+    {
+        if (argc != 5)
+        {
+            usage();
+            return 1;
+        }
+
+        return gpio_set(argv[2],
+                        (unsigned int)atoi(argv[3]),
+                        atoi(argv[4]));
     }
 
     usage();
