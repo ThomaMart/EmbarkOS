@@ -1,173 +1,144 @@
 Current Version: **0.1.0**
+<div align="center">
 
-# EmbarkOS
+# 🚀 EmbarkOS
 
-> An educational Embedded Linux BSP built with Buildroot.
+**A lightweight Embedded Linux BSP based on Buildroot**
 
-EmbarkOS is an open-source project whose goal is to learn and demonstrate modern Embedded Linux development practices used in the industry.
+![Buildroot](https://img.shields.io/badge/Buildroot-BSP-blue)
+![Language](https://img.shields.io/badge/C-17-blue.svg)
+![Platform](https://img.shields.io/badge/ARM64-AArch64-success)
+![License](https://img.shields.io/badge/License-MIT-green)
+![Status](https://img.shields.io/badge/Status-In%20Development-orange)
 
-The project focuses on **Board Support Package (BSP)** development using **Buildroot**, with a clean architecture, custom packages and progressively more advanced low-level Linux topics.
+Designing a custom Linux Board Support Package (BSP) for embedded systems.
 
----
-
-## Project Goals
-
-- Learn Buildroot from the ground up
-- Build and maintain a custom BSP
-- Develop embedded Linux utilities in C
-- Understand Linux boot process
-- Explore U-Boot and Device Tree
-- Create a reusable embedded Linux development platform
+</div>
 
 ---
 
-## Current Features
+# 📖 Overview
 
-- Buildroot based BSP
-- BR2_EXTERNAL architecture
-- Out-of-tree build support
-- Raspberry Pi 3 target
-- Custom root filesystem overlay
-- Dropbear SSH
-- ARM64 cross compilation
-- Bootable SD card image generation
-- Custom Buildroot packages
-- `embark-info` utility written in C
+EmbarkOS is a personal embedded Linux project built around **Buildroot**.
+
+The objective is to design a lightweight and modular Linux distribution while reproducing the workflow commonly used in embedded software engineering.
+
+The project focuses on:
+
+- 🐧 Linux Embedded Development
+- ⚙️ Buildroot BSP Design
+- 💻 Cross-compilation (ARM64)
+- 📦 Custom Buildroot Packages
+- 🔌 Hardware Interfaces (UART / GPIO)
+- 🛠️ Embedded System Utilities
 
 ---
 
-## Repository Structure
+# ✨ Features
+
+| Package | Description | Status |
+|---------|-------------|:------:|
+| ✅ embark-info | System information utility | ✔ |
+| ✅ embark-uart | UART monitoring tool | ✔ |
+| 🚧 embark-gpio | GPIO utility (libgpiod) | WIP |
+| ⏳ embark-monitor | System monitoring | Planned |
+| ⏳ embark-net | Network utilities | Planned |
+
+---
+
+# 📁 Project Structure
 
 ```text
-EmbarkOS/
-├── buildroot/          # Official Buildroot source
+EmbarkOS
+├── board/
+├── configs/
+├── docs/
 ├── external/
 │   └── embarkos/
-│       ├── board/
-│       ├── configs/
-│       ├── package/
-│       ├── patches/
-│       ├── Config.in
-│       └── external.mk
-├── docs/
-├── output/
-├── scripts/
-└── README.md
+│       └── package/
+│           ├── embark-info/
+│           ├── embark-uart/
+│           ├── embark-gpio/
+│           ├── embark-monitor/
+│           └── embark-net/
+├── releases/
+└── scripts/
 ```
 
 ---
 
-## Current Packages
-
-| Package | Description | Status |
-|---------|-------------|--------|
-| embark-info | Embedded system information utility | ✅ |
-
----
-
-## Roadmap
-
-### Foundation
-
-- [x] Buildroot setup
-- [x] BR2_EXTERNAL
-- [x] Raspberry Pi BSP
-- [x] Root filesystem overlay
-- [x] Dropbear SSH
-- [x] ARM64 cross compilation
-- [x] Custom Buildroot package
-- [x] Embedded utility written in C
-
-### Embedded Utilities
-
-- [ ] embark-uart
-- [ ] embark-monitor
-- [ ] embark-gpio
-
-### BSP Development
-
-- [ ] Device Tree customization
-- [ ] Linux kernel configuration
-- [ ] U-Boot customization
-- [ ] Board initialization
-- [ ] Custom board support
-
-### Embedded Linux
-
-- [ ] Custom init scripts
-- [ ] System services
-- [ ] Boot optimization
-- [ ] Read-only root filesystem
-- [ ] Package management improvements
-
-### Tooling
-
-- [ ] Automated testing
-- [ ] GitHub Actions CI
-- [ ] QEMU support
-- [ ] Release automation
-
----
-
-## Technologies
+# 🛠️ Technologies
 
 - C
+- GNU Make
 - Buildroot
-- Embedded Linux
-- ARM64
-- Bash
-- Git
-- Make
+- Linux Kernel
+- BusyBox
+- libgpiod
 - Raspberry Pi
+- ARM64 / AArch64
+- Git
 
 ---
 
-## Build
+# 🚀 Build
 
 ```bash
-git clone --recursive https://github.com/ThomaMart/EmbarkOS.git
+git clone https://github.com/<your-user>/EmbarkOS.git
 
 cd EmbarkOS
 
 ./scripts/build.sh
 ```
 
-The generated images are available in:
+---
 
-```text
-output/rpi3/images/
-```
+# 🎯 Roadmap
+
+## v0.1
+
+- ✅ BSP initialization
+- ✅ Buildroot integration
+- ✅ ARM64 toolchain
+- ✅ Root filesystem
+- ✅ embark-info
+
+## v0.2
+
+- ✅ embark-uart
+- 🚧 embark-gpio
+
+## v0.3
+
+- ⏳ embark-monitor
+- ⏳ embark-net
+
+## v1.0
+
+- Stable BSP
+- Complete embedded utilities
+- Documentation
+- Automated builds
 
 ---
 
-## Learning Objectives
+# 🎓 Learning Objectives
 
-EmbarkOS is intentionally developed step by step.
+This project is intended to demonstrate practical skills in:
 
-Each milestone introduces a new Embedded Linux concept:
-
+- Linux Embedded Development
 - Buildroot
-- Cross compilation
-- Custom packages
-- UART
-- GPIO
-- Device Tree
-- Linux kernel
-- U-Boot
-- BSP development
-
-The objective is not only to obtain a working Linux image but also to understand every component involved in an Embedded Linux system.
+- Board Support Package design
+- Cross Compilation
+- Embedded C Programming
+- Linux Userspace Development
+- Hardware Interfaces
+- Software Architecture
 
 ---
 
-## Project Status
+# 📄 License
 
-🚧 Active development
+MIT License
 
-EmbarkOS is continuously evolving as new Embedded Linux features are implemented.
-
----
-
-## License
-
-MIT
+Copyright © 2026 Thomas Martin
