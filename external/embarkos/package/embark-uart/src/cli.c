@@ -16,6 +16,7 @@ void cli_print_help(void)
     printf("  --device <device>    UART device\n");
     printf("  --baud <baudrate>    UART baudrate\n");
     printf("  --log <file>         Save UART output\n");
+    printf("  --timestamp          Display timestamps\n");
     printf("  --list-baud          List supported baudrates\n");
     printf("  --version            Show version\n");
     printf("  --help               Show help\n");
@@ -42,6 +43,7 @@ int cli_parse(int argc, char *argv[], struct uart_options *opts)
     opts->baudrate = UART_DEFAULT_BAUD;
     opts->log_file = NULL;
 
+    opts->timestamp = 0;
     opts->show_help = 0;
     opts->show_version = 0;
     opts->list_baud = 0;
@@ -59,6 +61,10 @@ int cli_parse(int argc, char *argv[], struct uart_options *opts)
         else if (!strcmp(argv[i], "--log") && i + 1 < argc)
         {
             opts->log_file = argv[++i];
+        }
+        else if (!strcmp(argv[i], "--timestamp"))
+        {
+            opts->timestamp = 1;
         }
         else if (!strcmp(argv[i], "--help"))
         {

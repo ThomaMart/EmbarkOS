@@ -4,6 +4,9 @@
 #include "../include/uart.h"
 #include "../include/cli.h"
 #include "../include/logger.h"
+#include "../include/timestamp.h"
+
+
 
 static volatile sig_atomic_t running = 1;
 
@@ -30,6 +33,11 @@ int main(int argc, char *argv[])
     {
         cli_print_help();
         return 0;
+    }
+    
+    if (opts.timestamp)
+    {
+        timestamp_init();
     }
 
     if (opts.show_version)
@@ -74,10 +82,16 @@ int main(int argc, char *argv[])
 
         buffer[bytes] = '\0';
 
+        if (opts.timestamp)
+        {
+            timestamp_print();
+        }
+
         fputs(buffer, stdout);
-        fflush(stdout);
 
         logger_write(log, buffer);
+
+        fflush(stdout);
     }
 
     uart_close(fd);

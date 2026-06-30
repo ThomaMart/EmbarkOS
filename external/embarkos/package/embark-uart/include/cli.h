@@ -7,6 +7,8 @@ struct uart_options
     int baudrate;
     const char *log_file;
 
+    int timestamp;
+
     int show_help;
     int show_version;
     int list_baud;

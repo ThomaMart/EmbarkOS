@@ -6,7 +6,8 @@ SRC = \
 	src/main.c \
 	src/uart.c \
 	src/cli.c \
-	src/logger.c
+	src/logger.c \
+	src/timestamp.c
 
 OBJ = $(SRC:.c=.o)
 
