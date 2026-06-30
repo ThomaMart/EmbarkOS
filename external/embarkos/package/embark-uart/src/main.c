@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <signal.h>
-#include <stdbool.h>
 
 #include "../include/uart.h"
 #include "../include/cli.h"
@@ -21,7 +20,26 @@ int main(int argc, char *argv[])
 
     signal(SIGINT, signal_handler);
 
-    cli_parse(argc, argv, &opts);
+    if (cli_parse(argc, argv, &opts) != 0)
+        return 1;
+
+    if (opts.show_help)
+    {
+        cli_print_help();
+        return 0;
+    }
+
+    if (opts.show_version)
+    {
+        cli_print_version();
+        return 0;
+    }
+
+    if (opts.list_baud)
+    {
+        cli_print_baudrates();
+        return 0;
+    }
 
     printf("=========================================\n");
     printf("        Embark UART Monitor\n");
