@@ -1,4 +1,3 @@
-Current Version: **0.1.0**
 <div align="center">
 
 # 🚀 EmbarkOS
@@ -13,13 +12,15 @@ Current Version: **0.1.0**
 
 Designing a custom Linux Board Support Package (BSP) for embedded systems.
 
+Current Version: **0.1.0**
+
 </div>
 
 ---
 
 # 📖 Overview
 
-EmbarkOS is a personal embedded Linux project built around **Buildroot**.
+EmbarkOS is a personal embedded Linux project built around **Buildroot**. 
 
 The objective is to design a lightweight and modular Linux distribution while reproducing the workflow commonly used in embedded software engineering.
 
