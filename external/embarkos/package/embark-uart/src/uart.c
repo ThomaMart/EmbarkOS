@@ -75,6 +75,18 @@ ssize_t uart_read(int fd, char *buffer, size_t size)
     return read(fd, buffer, size);
 }
 
+ssize_t uart_receive(int fd, char *buffer, size_t size)
+{
+    int ret;
+
+    ret = uart_wait_data(fd);
+
+    if (ret <= 0)
+        return ret;
+
+    return uart_read(fd, buffer, size);
+}
+
 int uart_open(const char *device)
 {
     int fd;

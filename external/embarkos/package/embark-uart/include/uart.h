@@ -11,9 +11,11 @@ int uart_open(const char *device);
 
 int uart_configure(int fd, int baudrate);
 
+int uart_wait_data(int fd);
+
 ssize_t uart_read(int fd, char *buffer, size_t size);
 
-int uart_wait_data(int fd);
+ssize_t uart_receive(int fd, char *buffer, size_t size);
 
 void uart_close(int fd);
 
