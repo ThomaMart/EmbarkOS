@@ -1,3 +1,5 @@
+Current Version: **0.1.0**
+
 # EmbarkOS
 
 > An educational Embedded Linux BSP built with Buildroot.

@@ -1,0 +1,4 @@
+config BR2_PACKAGE_EMBARK_UART
+	bool "embark-uart"
+	help
+	  UART monitoring utility for embedded Linux.
