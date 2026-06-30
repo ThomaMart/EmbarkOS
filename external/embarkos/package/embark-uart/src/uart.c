@@ -3,24 +3,53 @@
 #include <unistd.h>
 #include <errno.h>
 #include <string.h>
+#include <termios.h>
 
 #include "../include/uart.h"
+#include <unistd.h>
+
+
 
 int uart_configure(int fd, int baudrate)
 {
-    (void)fd;
+    struct termios tty;
+
     (void)baudrate;
+
+    if (tcgetattr(fd, &tty) != 0)
+    {
+        perror("tcgetattr");
+        return -1;
+    }
+
+    cfsetispeed(&tty, B115200);
+    cfsetospeed(&tty, B115200);
+
+    tty.c_cflag &= ~PARENB;
+    tty.c_cflag &= ~CSTOPB;
+    tty.c_cflag &= ~CSIZE;
+    tty.c_cflag |= CS8;
+    tty.c_cflag |= CREAD;
+    tty.c_cflag |= CLOCAL;
+
+    tty.c_iflag = 0;
+    tty.c_oflag = 0;
+    tty.c_lflag = 0;
+
+    if (tcsetattr(fd, TCSANOW, &tty) != 0)
+    {
+        perror("tcsetattr");
+        return -1;
+    }
+
+    printf("UART configured: 115200 8N1\n");
 
     return 0;
 }
 
-int uart_read(int fd, char *buffer, int size)
+ssize_t uart_read(int fd, char *buffer, size_t size)
 {
-    (void)fd;
-    (void)buffer;
-    (void)size;
-
-    return 0;
+    return read(fd, buffer, size);
 }
 
 int uart_open(const char *device)

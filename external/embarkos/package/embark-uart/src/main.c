@@ -1,28 +1,57 @@
 #include <stdio.h>
+#include <signal.h>
+#include <stdbool.h>
 
 #include "../include/uart.h"
+#include "../include/cli.h"
 
-int main(void)
+static volatile sig_atomic_t running = 1;
+
+static void signal_handler(int sig)
+{
+    (void)sig;
+    running = 0;
+}
+
+int main(int argc, char *argv[])
 {
     int fd;
+    char buffer[256];
+    struct uart_options opts;
+
+    signal(SIGINT, signal_handler);
+
+    cli_parse(argc, argv, &opts);
 
     printf("=========================================\n");
     printf("        Embark UART Monitor\n");
     printf("=========================================\n\n");
 
-    printf("Device : %s\n", UART_DEFAULT_DEVICE);
-    printf("Baud   : %d\n\n", UART_DEFAULT_BAUD);
+    printf("Device : %s\n", opts.device);
+    printf("Baud   : %d\n\n", opts.baudrate);
 
-    fd = uart_open(UART_DEFAULT_DEVICE);
+    fd = uart_open(opts.device);
 
-    if (uart_configure(fd, UART_DEFAULT_BAUD) != 0)
+    if (fd < 0)
+        return 1;
+
+    if (uart_configure(fd, opts.baudrate) != 0)
     {
         uart_close(fd);
         return 1;
     }
 
-    if (fd < 0)
-        return 1;
+    while (running)
+    {
+        ssize_t bytes = uart_read(fd, buffer, sizeof(buffer) - 1);
+
+        if (bytes > 0)
+        {
+            buffer[bytes] = '\0';
+            printf("%s", buffer);
+            fflush(stdout);
+        }
+    }
 
     uart_close(fd);
 
