@@ -13,6 +13,8 @@ int uart_configure(int fd, int baudrate);
 
 ssize_t uart_read(int fd, char *buffer, size_t size);
 
+int uart_wait_data(int fd);
+
 void uart_close(int fd);
 
 #endif

@@ -61,6 +61,14 @@ int main(int argc, char *argv[])
 
     while (running)
     {
+        int ret = uart_wait_data(fd);
+
+        if (ret < 0)
+            break;
+
+        if (ret == 0)
+            continue;
+
         ssize_t bytes = uart_read(fd, buffer, sizeof(buffer) - 1);
 
         if (bytes > 0)

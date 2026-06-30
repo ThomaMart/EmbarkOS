@@ -4,6 +4,8 @@
 #include <errno.h>
 #include <string.h>
 #include <termios.h>
+#include <sys/select.h>
+#include <sys/time.h>
 
 #include "../include/uart.h"
 #include <unistd.h>
@@ -91,6 +93,20 @@ int uart_open(const char *device)
     printf("UART opened successfully.\n");
 
     return fd;
+}
+
+int uart_wait_data(int fd)
+{
+    fd_set readfds;
+    struct timeval timeout;
+
+    FD_ZERO(&readfds);
+    FD_SET(fd, &readfds);
+
+    timeout.tv_sec = 1;
+    timeout.tv_usec = 0;
+
+    return select(fd + 1, &readfds, NULL, NULL, &timeout);
 }
 
 void uart_close(int fd)
