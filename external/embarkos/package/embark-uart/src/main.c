@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <signal.h>
+#include <string.h>
 
 #include "../include/uart.h"
 #include "../include/cli.h"
@@ -68,6 +69,12 @@ int main(int argc, char *argv[])
     {
         uart_close(fd);
         return 1;
+    }
+
+    if (opts.send)
+    {
+        uart_write(fd, opts.send, strlen(opts.send));
+        uart_write(fd, "\n", 1);
     }
 
     while (running)

@@ -5,7 +5,9 @@ struct uart_options
 {
     const char *device;
     int baudrate;
+
     const char *log_file;
+    const char *send;
 
     int timestamp;
 
