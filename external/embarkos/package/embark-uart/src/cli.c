@@ -8,12 +8,14 @@
 void cli_print_help(void)
 {
     printf("Embark UART Monitor\n\n");
+
     printf("Usage:\n");
     printf("  embark-uart [OPTIONS]\n\n");
 
     printf("Options:\n");
     printf("  --device <device>    UART device\n");
     printf("  --baud <baudrate>    UART baudrate\n");
+    printf("  --log <file>         Save UART output\n");
     printf("  --list-baud          List supported baudrates\n");
     printf("  --version            Show version\n");
     printf("  --help               Show help\n");
@@ -28,9 +30,9 @@ void cli_print_baudrates(void)
 {
     printf("Supported baudrates:\n");
     printf(" 9600\n");
-    printf(" 19200\n");
-    printf(" 38400\n");
-    printf(" 57600\n");
+    printf("19200\n");
+    printf("38400\n");
+    printf("57600\n");
     printf("115200\n");
 }
 
@@ -38,6 +40,7 @@ int cli_parse(int argc, char *argv[], struct uart_options *opts)
 {
     opts->device = UART_DEFAULT_DEVICE;
     opts->baudrate = UART_DEFAULT_BAUD;
+    opts->log_file = NULL;
 
     opts->show_help = 0;
     opts->show_version = 0;
@@ -53,6 +56,10 @@ int cli_parse(int argc, char *argv[], struct uart_options *opts)
         {
             opts->baudrate = atoi(argv[++i]);
         }
+        else if (!strcmp(argv[i], "--log") && i + 1 < argc)
+        {
+            opts->log_file = argv[++i];
+        }
         else if (!strcmp(argv[i], "--help"))
         {
             opts->show_help = 1;
@@ -64,6 +71,11 @@ int cli_parse(int argc, char *argv[], struct uart_options *opts)
         else if (!strcmp(argv[i], "--list-baud"))
         {
             opts->list_baud = 1;
+        }
+        else
+        {
+            fprintf(stderr, "Unknown option: %s\n", argv[i]);
+            return -1;
         }
     }
 

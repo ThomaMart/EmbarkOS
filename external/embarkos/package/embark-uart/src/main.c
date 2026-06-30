@@ -3,6 +3,7 @@
 
 #include "../include/uart.h"
 #include "../include/cli.h"
+#include "../include/logger.h"
 
 static volatile sig_atomic_t running = 1;
 
@@ -22,6 +23,8 @@ int main(int argc, char *argv[])
 
     if (cli_parse(argc, argv, &opts) != 0)
         return 1;
+
+    FILE *log = logger_open(opts.log_file);
 
     if (opts.show_help)
     {
@@ -71,12 +74,15 @@ int main(int argc, char *argv[])
 
         buffer[bytes] = '\0';
 
-        printf("%s", buffer);
-
+        fputs(buffer, stdout);
         fflush(stdout);
+
+        logger_write(log, buffer);
     }
 
     uart_close(fd);
+
+    logger_close(log);
 
     return 0;
 }

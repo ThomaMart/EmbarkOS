@@ -5,7 +5,8 @@ TARGET = embark-uart
 SRC = \
 	src/main.c \
 	src/uart.c \
-	src/cli.c
+	src/cli.c \
+	src/logger.c
 
 OBJ = $(SRC:.c=.o)
 
