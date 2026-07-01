@@ -8,11 +8,17 @@ echo "========================================="
 echo "     🚀 Building EmbarkOS (Raspberry Pi)"
 echo "========================================="
 
-make -C "$ROOT/buildroot" \
-    BR2_EXTERNAL="$ROOT/external/embarkos" \
-    O="$ROOT/output/rpi3" \
-    BR2_DEFCONFIG="$ROOT/configs/embarkos_rpi3_defconfig" \
-    defconfig
+if [ ! -f "$ROOT/output/rpi3/.config" ]; then
+
+    echo "[INFO] Initializing Buildroot..."
+
+    make -C "$ROOT/buildroot" \
+        BR2_EXTERNAL="$ROOT/external/embarkos" \
+        O="$ROOT/output/rpi3" \
+        BR2_DEFCONFIG="$ROOT/configs/embarkos_rpi3_defconfig" \
+        defconfig
+
+fi
 
 make -C "$ROOT/buildroot" \
     BR2_EXTERNAL="$ROOT/external/embarkos" \
